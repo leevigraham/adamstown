@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Rewards Program{% endblock %}
+
+{% block body %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h1>Create New Rewards Program</h1>
+
+    <form method="post" action="{{ path('app_rewards_program_create') }}">
+        <div style="margin-bottom: 15px;">
+            <label for="name" style="display: block; margin-bottom: 5px; font-weight: bold;">Program Name</label>
+            <input type="text" id="name" name="name" required autofocus
+                   style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px;">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+                Create Program
+            </button>
+            <a href="{{ path('app_rewards_program_index') }}" style="padding: 10px 20px; background: #6c757d; color: white; text-decoration: none; border-radius: 4px;">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

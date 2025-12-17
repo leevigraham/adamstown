@@ -1,0 +1,8 @@
+<div id="student-{{ student.id }}" style="display: inline-block;">
+    <form method="post" action="{{ path('app_student_add_point', {id: student.id}) }}" data-turbo-stream>
+        <button type="submit" style="padding: 20px 30px; font-size: 18px; border: 2px solid #007bff; background: #f8f9fa; border-radius: 8px; cursor: pointer; min-width: 150px; transition: all 0.2s;">
+            <strong>{{ student.name }}</strong><br>
+            <span style="font-size: 24px; color: #007bff;">{{ student.points }}</span> points
+        </button>
+    </form>
+</div>

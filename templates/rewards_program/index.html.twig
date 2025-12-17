@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rewards Programs{% endblock %}
+
+{% block body %}
+<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1>Rewards Programs</h1>
+
+    <p>
+        <a href="{{ path('app_rewards_program_new') }}" style="display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 4px;">
+            + New Program
+        </a>
+    </p>
+
+    {% if programs is empty %}
+        <p>No rewards programs yet. Create one to get started!</p>
+    {% else %}
+        <ul style="list-style: none; padding: 0;">
+            {% for program in programs %}
+                <li style="margin-bottom: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 4px;">
+                    <a href="{{ path('app_rewards_program_show', {id: program.id}) }}" style="font-size: 1.2em; text-decoration: none; color: #333;">
+                        {{ program.name }}
+                    </a>
+                    <span style="color: #666; margin-left: 10px;">
+                        ({{ program.students|length }} students)
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}

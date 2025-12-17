@@ -1,0 +1,5 @@
+<turbo-stream action="replace" target="student-{{ student.id }}">
+    <template>
+        {{ include('student/_student_button.html.twig', {student: student}) }}
+    </template>
+</turbo-stream>
