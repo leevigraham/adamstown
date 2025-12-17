@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\UX\Turbo\TurboBundle;
 
 class RewardsProgramController extends AbstractController
 {
@@ -78,6 +79,41 @@ class RewardsProgramController extends AbstractController
 
         $em->persist($student);
         $em->flush();
+
+        return $this->redirectToRoute('app_rewards_program_show', ['id' => $program->getId()]);
+    }
+
+    #[Route('/program/{id}/random-winner', name: 'app_rewards_program_random_winner', methods: ['POST'])]
+    public function randomWinner(RewardsProgram $program, Request $request): Response
+    {
+        $students = $program->getStudents();
+        $winner = null;
+
+        // Build weighted pool: each student gets entries equal to their points
+        $pool = [];
+        foreach ($students as $student) {
+            $points = $student->getPoints();
+            if ($points > 0) {
+                for ($i = 0; $i < $points; $i++) {
+                    $pool[] = $student;
+                }
+            }
+        }
+
+        if (!empty($pool)) {
+            $winner = $pool[array_rand($pool)];
+        }
+
+        if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
+            $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+
+            return $this->render('rewards_program/_winner.stream.html.twig', [
+                'winner' => $winner,
+                'program' => $program,
+            ]);
+        }
+
+        $this->addFlash('winner', $winner ? $winner->getName() : null);
 
         return $this->redirectToRoute('app_rewards_program_show', ['id' => $program->getId()]);
     }

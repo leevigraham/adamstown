@@ -10,11 +10,20 @@
 
     <h1>{{ program.name }}</h1>
 
-    <p>
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
         <a href="{{ path('app_rewards_program_add_student', {id: program.id}) }}" style="display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px;">
             + Add Student
         </a>
-    </p>
+        {% if program.students|length > 0 %}
+            <form method="post" action="{{ path('app_rewards_program_random_winner', {id: program.id}) }}" data-turbo-stream>
+                <button type="submit" style="padding: 10px 20px; background: #ffc107; color: #212529; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                    Pick Random Winner
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+    <div id="winner-display">xxx</div>
 
     {% if program.students is empty %}
         <p>No students in this program yet. Add some students to start awarding points!</p>

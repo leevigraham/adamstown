@@ -1,0 +1,13 @@
+<turbo-stream action="replace" target="winner-display">
+    <template>
+        <div id="winner-display" style="margin-bottom: 20px; padding: 20px; border-radius: 8px; text-align: center; {% if winner %}background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;{% else %}background: #f8d7da; color: #721c24;{% endif %}">
+            {% if winner %}
+                <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Winner!</div>
+                <div style="font-size: 32px; font-weight: bold;">{{ winner.name }}</div>
+                <div style="font-size: 16px; margin-top: 10px;">{{ winner.points }} points</div>
+            {% else %}
+                <div style="font-size: 16px;">No students with points yet. Award some points first!</div>
+            {% endif %}
+        </div>
+    </template>
+</turbo-stream>
